@@ -20,9 +20,17 @@ const Auth = React.lazy(() => {
 });
 
 const app = props => {
+  const { onTryAutoSignup } = props;
+
+  //when this component re-renders props changes to a new object
+  //can't put porps in [] as dependency because then useEffect would trigger
+  //every time the component re-renders (cuz then props changes)
+  //only trigger useEffect when onTryAutoSignup function or its definition changes
+  //function change - when the place the function is defined reruns 
+  //then a new function is created in its place
   useEffect(() => {
-    props.onTryAutoSignup();
-  }, []);
+    onTryAutoSignup();
+  }, [onTryAutoSignup]);
 
   let routes = (
     <Switch>
